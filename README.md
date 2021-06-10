@@ -1,2 +1,3 @@
-# selfhosted-runner-ec2
-Cria e termina uma EC2 e a registra para uso como self-hosted runner do GitHub Action
+# github-selhostedrunner-ec2-action
+
+GitHub Action que cria e exclui VMs EC2 na AWS para uso como self-hosted runner

@@ -1,0 +1,74 @@
+name: Github self-hosted runners alocados dinamicamente na AWS como VMs EC2 (sob demanda)
+description: Cria a EC2, registra no Github como self-hosted runner e a finaliza quando a tarefa termina
+author: sandro.santos@zup.com.br
+branding:
+  icon: 'play'
+  color: 'blue'
+inputs:
+  mode:
+    description: >-
+      Informe
+        - 'start' - para criar cria a instancia;
+        - 'stop' - para finalizar a instancia criada.
+    required: true
+  github-token:
+    description: >-
+      O "GitHub Personal Access Token" com escopo 'repo' que será utilizado na integração
+    required: true
+  ec2-image-id:
+    description: >-
+      O Id da AWS EC2 AMI que será utilizada. A AMI deverá estar disponível para uso na conta ou ser criada nela caso requerido.
+      TODO: Idealizar o roadmap e ciclo de vida das AMIs e disponibilizar em conta centralizada com página informativa. Avaliar AMI privadas na AWS Marketplace
+      Esse parâmetro é requerido caso 'mode: start'
+    required: false
+  ec2-instance-type:
+    description: >-
+      Tipo da instancia EC2. Veja: https://aws.amazon.com/pt/ec2/instance-types/
+      Esse parâmetro é requerido caso 'mode: start'
+    required: false
+  subnet-id:
+    description: >-
+      Esse parâmetro é requerido caso 'mode: start'
+    required: false
+  security-group-id:
+    description: >-
+      EC2 Security Group Id.
+      O runner não requer qualquer trafico de entrada (inbound), porém o trafico de saída precisa estar liberado (outbound)
+      TODO: Restrigir ao necessário o tráfico de saída de acordo com o propósito da AMI para a etapa da esteira
+      Esse parâmetro é requerido caso 'mode: start'
+    required: false
+  label:
+    description: >-
+      Um nome único para o runner
+      O rótulo é utilizado para remover o runner do GitHub quando o ele não é mais necessário
+      Esse parâmetro é requerido caso 'mode: start'
+    required: false
+  ec2-instance-id:
+    description: >-
+      O id da instância ECS criada para o runner. É retornado no término da ação utilizando o parâmetro "mode: start"
+      Esse id é utilizado para encerrar a instância quando executada a ação com o parâmetro: "mode: stop"
+    required: false
+  iam-role-name:
+    description: >-
+      O nome da IAM Role que deverá ser incluída na EC2
+    required: false
+  aws-resource-tags:
+    description: >-
+      Tags que deverão ser anexadas na instância EC2 e no volume EBS utilizado
+      Siga o exemplo: '[{"Key": "Ambiente", "Value": "Lab"}, {"Key": "Projeto", "Value": "ZUP CI/CD Workshop"}], ...'
+    required: false
+    default: '[]'
+outputs:
+  label:
+    description: >-
+      O nome único do label associado ao runner
+      O label é utilizado para:
+      - 'runs-on' valor que determina onde o job será executado;
+      - para remover o runner da conta no github associado ao token quando ele não é mais requerido
+  ec2-instance-id:
+    description: >-
+      O Id da instância EC2 criada na AWS
+      Esse valor é utilizado para encerrar a instância quando ela não é mais necessária
+runs:
+  using: node12
+  main: ./dist/index.js

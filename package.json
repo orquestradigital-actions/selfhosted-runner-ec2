@@ -1,0 +1,30 @@
+{
+  "name": "github-selhostedrunner-ec2-action",
+  "description": "Github Action para criar e registrar instancias AWS EC2 como self-hosted runners",
+  "author": "sandro.santos@zup.com.br",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:sandrosantoszup/github-selhostedrunner-ec2-action.git"
+  },
+  "homepage": "https://github.com/sandrosantoszup/github-selhostedrunner-ec2-action#readme",
+  "bugs": {
+    "url": "https://github.com/sandrosantoszup/github-selhostedrunner-ec2-action/issues"
+  },
+  "scripts": {
+    "index": "node -r dotenv/config ./src/index.js",
+    "lint": "eslint ./src/*.js",
+    "package": "ncc build ./src/index.js"
+  },
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0",
+    "aws-sdk": "^2.809.0",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.25.1",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.15.0"
+  }
+}
