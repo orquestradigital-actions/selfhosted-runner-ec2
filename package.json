@@ -19,7 +19,7 @@
   "dependencies": {
     "@actions/core": "^1.2.6",
     "@actions/github": "^5.0.0",
-    "aws-sdk": "^2.936.0",
+    "aws-sdk": "^2.1019.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
