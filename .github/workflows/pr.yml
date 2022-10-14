@@ -12,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           path: '**/node_modules'
           key: github-selhostedrunner-ec2-action-${{ hashFiles('**/package-lock.json') }}
@@ -31,7 +31,7 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           path: '**/node_modules'
           key: ec2-github-runner-${{ hashFiles('**/package-lock.json') }}
